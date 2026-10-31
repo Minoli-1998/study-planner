@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:study_planner/constants/app_text_styles.dart';
+import 'package:study_planner/models/course_model.dart';
+import 'package:study_planner/services/course_service.dart';
+import 'package:study_planner/utils/utils_functions.dart';
 import 'package:study_planner/widgets/custom_app_button.dart';
 import 'package:study_planner/widgets/custom_input_field.dart';
 
@@ -29,16 +33,44 @@ class _AddNewCoursePageState extends State<AddNewCoursePage> {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
 
-        // course model
+        try {
+          // course model
+          final Course newCourse = Course(
+            name: _nameController.text,
+            description: _descriptionController.text,
+            duration: _durationController.text,
+            schedule: _scheduleController.text,
+            instructor: _instructorController.text,
+            id: '',
+          );
 
-        // save course data in firebase
+          // save course data in firebase
+          await CourseService().addCourse(newCourse);
 
-        // clear fields
-        _nameController.clear();
-        _descriptionController.clear();
-        _durationController.clear();
-        _scheduleController.clear();
-        _instructorController.clear();
+          // show snackbar after adding new course
+          if (context.mounted) {
+            displaySnackbar(context: context, message: "New course added");
+          }
+
+          // clear fields
+          _nameController.clear();
+          _descriptionController.clear();
+          _durationController.clear();
+          _scheduleController.clear();
+          _instructorController.clear();
+
+          Future.delayed(Duration(seconds: 2));
+
+          // navigate to home
+          GoRouter.of(context).go('/');
+        } catch (error) {
+          if (context.mounted) {
+            displaySnackbar(
+              context: context,
+              message: "Error in adding new course : $error",
+            );
+          }
+        }
       }
     }
 

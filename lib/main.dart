@@ -21,6 +21,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         fontFamily: GoogleFonts.poppins().fontFamily,
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: Colors.black,
+          contentTextStyle: TextStyle(color: Colors.white),
+        ),
       ),
       routerConfig: RouterClass().router,
     );
