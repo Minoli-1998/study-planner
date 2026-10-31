@@ -87,34 +87,40 @@ class MainPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         Course course = snapshot.data![index];
 
-                        return Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 20,
-                            horizontal: 20,
-                          ),
-                          margin: EdgeInsets.only(bottom: 15),
-                          decoration: BoxDecoration(
-                            color: lightGreen,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                course.name,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                        return GestureDetector(
+                          onTap: () {
+                            GoRouter.of(context)
+                                .push('/single-course', extra: course);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 20,
+                              horizontal: 20,
+                            ),
+                            margin: EdgeInsets.only(bottom: 15),
+                            decoration: BoxDecoration(
+                              color: lightGreen,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  course.name,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
 
-                              Text(
-                                course.description,
-                                style: AppTextStyles.appDescriptionTextStyle
-                                    .copyWith(color: Colors.black),
-                              ),
-                            ],
+                                Text(
+                                  course.description,
+                                  style: AppTextStyles.appDescriptionTextStyle
+                                      .copyWith(color: Colors.black),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
