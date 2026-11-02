@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:study_planner/constants/app_text_styles.dart';
+import 'package:study_planner/models/assignment_model.dart';
 import 'package:study_planner/models/course_model.dart';
+import 'package:study_planner/services/assignment_service.dart';
 import 'package:study_planner/utils/utils_functions.dart';
 import 'package:study_planner/widgets/custom_app_button.dart';
 import 'package:study_planner/widgets/custom_input_field.dart';
@@ -57,7 +60,27 @@ class AddNewAssignment extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      try {} catch (error) {
+      try {
+        final Assignment assignment = Assignment(
+          id: "",
+          name: _assignmentNameController.text,
+          description: _assignmentDescriptionController.text,
+          duration: _assignmentDurationController.text,
+          dueDate: _selectedDate.value,
+          dueTime: _selectedTime.value,
+        );
+
+        await AssignmentService().createAssignment(course.id, assignment);
+
+        if (context.mounted) {
+          displaySnackbar(context: context, message: "Assignemnt added");
+        }
+
+        Future.delayed(Duration(seconds: 2));
+
+        GoRouter.of(context).go('/');
+      } catch (error) {
+        print(error);
         if (context.mounted) {
           displaySnackbar(
             context: context,
