@@ -1,9 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:study_planner/constants/app_text_styles.dart';
 import 'package:study_planner/models/course_model.dart';
+import 'package:study_planner/models/note_model.dart';
+import 'package:study_planner/services/database/note_service.dart';
+import 'package:study_planner/utils/utils_functions.dart';
 import 'package:study_planner/widgets/custom_app_button.dart';
 import 'package:study_planner/widgets/custom_input_field.dart';
 
@@ -41,6 +45,37 @@ class _AddNewNoteState extends State<AddNewNote> {
   void _submitForm(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      try {
+        // create new note
+        final Note note = Note(
+          id: "",
+          title: _noteTitleController.text,
+          description: _noteDescriptionController.text,
+          sectionName: _sectionNameController.text,
+          referenceBook: _referenceBooksController.text,
+          imageData: _selectedImage != null ? File(_selectedImage!.path) : null,
+        );
+
+        await NoteService().createNote(widget.course.id, note);
+
+        if (context.mounted) {
+          displaySnackbar(context: context, message: "New note created");
+        }
+
+        Future.delayed(Duration(seconds: 2));
+
+        GoRouter.of(context).go('/');
+      } catch (error) {
+        print(error);
+
+        if (context.mounted) {
+          displaySnackbar(
+            context: context,
+            message: "Error in creating new note",
+          );
+        }
+      }
     }
   }
 
