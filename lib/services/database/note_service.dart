@@ -44,4 +44,47 @@ class NoteService {
       print("Error in creating note in service : $error");
     }
   }
+
+  // get notes by course id
+  Stream<List<Note>> getNotes(String courseId) {
+    try {
+      // note collection reference
+      final CollectionReference noteCollection = _courseCollection
+          .doc(courseId)
+          .collection('notes');
+
+      return noteCollection.snapshots().map(
+        (snapshot) => snapshot.docs
+            .map((doc) => Note.fromJson(doc.data() as Map<String, dynamic>))
+            .toList(),
+      );
+    } catch (error) {
+      throw Exception(
+        "Error in fetching notes by course id $courseId : $error",
+      );
+    }
+  }
+
+  // get notes with course name as a map
+  Future<Map<String, List<Note>>> getNotesWithCourseName() async {
+    try {
+      final QuerySnapshot snapshot = await _courseCollection.get();
+      final Map<String, List<Note>> notesMap = {};
+
+      for (final doc in snapshot.docs) {
+        // get course id
+        String courseId = doc.id;
+
+        // get all notes under course id
+        List<Note> notes = await getNotes(courseId).first;
+
+        // create key value pairs
+        notesMap[doc['name']] = notes;
+      }
+
+      return notesMap;
+    } catch (error) {
+      throw Exception("Error in fetching notes with course name : $error");
+    }
+  }
 }

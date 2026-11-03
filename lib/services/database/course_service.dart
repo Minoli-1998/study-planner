@@ -32,6 +32,21 @@ class CourseService {
     );
   }
 
+  // get courses to display data using future builder
+  Future<List<Course>> getAllCourses() async {
+    try {
+      final QuerySnapshot snapshot = await _courseCollection.get();
+      return snapshot.docs
+          .map(
+            (doc) =>
+                Course.fromJson(doc.data() as Map<String, dynamic>, doc.id),
+          )
+          .toList();
+    } catch (error) {
+      throw Exception("Error in fetching courses in future method $error");
+    }
+  }
+
   // delete course
   Future<void> deleteCourse(String id) async {
     try {
