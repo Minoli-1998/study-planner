@@ -139,6 +139,7 @@ class CoursesPage extends StatelessWidget {
                                 children: assignments.map((assignment) {
                                   return Card(
                                     margin: EdgeInsets.only(bottom: 10),
+                                    color: Colors.black12,
                                     child: ListTile(
                                       title: Text(assignment.name),
                                       subtitle: Text(
@@ -174,11 +175,9 @@ class CoursesPage extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: notes.map((note) {
-                                  return Container(
+                                  return Card(
                                     margin: EdgeInsets.only(bottom: 10),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
+                                    color: Colors.black12,
                                     child: ListTile(
                                       title: Text(note.title),
                                       subtitle: Text(
