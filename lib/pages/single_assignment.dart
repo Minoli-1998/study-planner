@@ -1,40 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:study_planner/constants/app_text_styles.dart';
+import 'package:intl/intl.dart';
 import 'package:study_planner/models/assignment_model.dart';
 
 class SingleAssignment extends StatelessWidget {
   final Assignment assignment;
-  const SingleAssignment({super.key, required this.assignment});
+
+  const SingleAssignment({required this.assignment, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              assignment.name,
-              style: AppTextStyles.appHeadingTextStyle.copyWith(fontSize: 16),
+              'Title: ${assignment.name}',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-
-            SizedBox(height: 20),
-
+            const SizedBox(height: 10),
+            const Text(
+              'Description:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             Text(
               assignment.description,
-              style: AppTextStyles.appDescriptionTextStyle,
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
-
-            SizedBox(height: 5),
-
+            const SizedBox(height: 10),
+            const Text(
+              'Due Date:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             Text(
-              'Due Date: ${assignment.dueDate}',
-              style: AppTextStyles.appDescriptionTextStyle,
+              DateFormat.yMMMd().format(assignment.dueDate),
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
-
-            SizedBox(height: 5),
+            const SizedBox(height: 10),
+            const Text(
+              'Time:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              DateFormat.Hm().format(assignment.dueDate),
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
+            ),
           ],
         ),
       ),

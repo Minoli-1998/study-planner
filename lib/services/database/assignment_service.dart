@@ -29,7 +29,7 @@ class AssignmentService {
     try {
       // aasignment collection reference
       final CollectionReference assignmentCollection = _courseCollection
-          .doc()
+          .doc(courseId)
           .collection("assignments");
 
       return assignmentCollection.snapshots().map(

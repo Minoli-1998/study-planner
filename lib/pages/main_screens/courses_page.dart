@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:study_planner/constants/app_text_styles.dart';
 import 'package:study_planner/constants/colors.dart';
 import 'package:study_planner/models/assignment_model.dart';
@@ -124,8 +125,11 @@ class CoursesPage extends StatelessWidget {
                             if (assignments.isNotEmpty) ...[
                               Text(
                                 "Assignments",
-                                style: AppTextStyles.appHeadingTextStyle
-                                    .copyWith(fontSize: 16),
+                                style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
 
                               const SizedBox(height: 10),
@@ -138,7 +142,7 @@ class CoursesPage extends StatelessWidget {
                                     child: ListTile(
                                       title: Text(assignment.name),
                                       subtitle: Text(
-                                        "Due Date: ${assignment.dueDate}",
+                                        'Due Date: ${DateFormat('MMM dd, yyyy').format(assignment.dueDate)}',
                                       ),
                                       onTap: () {
                                         GoRouter.of(context).push(
