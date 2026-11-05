@@ -1,17 +1,22 @@
 # study_planner
 
-A new Flutter project.
+## Description
 
-## Getting Started
+The Study Planner App is a comprehensive tool designed to help students and professionals manage their courses, assignments, and notes effectively. The app allows users to view courses, track assignments, and access notes with notifications for overdue tasks.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- View and manage courses.
+- Track assignments with due dates.
+- Access and organize course notes.
+- Receive notifications for overdue assignments.
+- Real-time updates for assignments and notifications.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Technologies Used
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter
+- Firebase Firestore
+- Firebase Authentication
+- Firebase Cloud Storage
+- Firebase Cloud Functions
+- GoRouter for navigation
